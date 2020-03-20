@@ -1,5 +1,8 @@
 import processing.video.*;
 import qrcodeprocessing.*;
+import java.util.ArrayList;
+
+ArrayList<PShape> shapes = new ArrayList<PShape>();
 
 Capture video;
 
@@ -15,7 +18,10 @@ void setup() {
 
 void decoderEvent(Decoder decoder) {
   String code = decoder.getDecodedString();
-  println(code);
+  PShape shape = loadShape(code);
+  if(shape != null) {
+    shapes.add(shape);
+  }
 }
 
 void captureEvent(Capture video) {
@@ -25,6 +31,8 @@ void captureEvent(Capture video) {
 void draw() {
   background(0);
   image(video, 0, 0);
+  
+  if(shapes.size() > 0) shape(shapes.get(0));
 
   if (decoder.decoding()) {
     
