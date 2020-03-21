@@ -20,7 +20,7 @@ void decoderEvent(Decoder decoder) {
   String code = decoder.getDecodedString();
   PShape shape = loadShape(code);
   if(shape != null) {
-    shapes.add(shape);
+    if(!shapes.contains(shape)) shapes.add(shape);
   }
 }
 
