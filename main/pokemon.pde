@@ -27,7 +27,7 @@ class Pokemon {
     if (p == this) { 
       return true;
     } 
-    
+
     if (!(p instanceof Pokemon)) { 
       return false;
     } 

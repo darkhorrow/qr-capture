@@ -3,7 +3,7 @@ class Animation {
   int imageCount;
   int frame;
   boolean isLeft;
-  
+
   Animation(String imagePrefix, int count, boolean isLeft) {
     imageCount = count;
     images = new PImage[imageCount];
@@ -21,11 +21,11 @@ class Animation {
     delay(35);
     image(images[frame], xpos, ypos);
   }
-  
+
   int getWidth() {
     return images[0].width;
   }
-  
+
   int getHeight() {
     return images[0].height;
   }

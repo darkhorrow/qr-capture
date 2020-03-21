@@ -15,7 +15,6 @@ String feedbackMessage = "Waiting PLAYER 1 to scan a Pokemon QR...";
 Animation animation1;
 Animation animation2;
 
-
 void setup() {
   size(640, 480, P3D);
   video = new Capture(this, width, height);
@@ -47,10 +46,9 @@ void decoderEvent(Decoder decoder) {
   }
   if (pokemons.size() == 2) {
     feedbackMessage = "";
-    scale(-1.0,1.0);
     animation1 = new Animation(pokemons.get(0).name, pokemons.get(0).frames, true);
     animation2 = new Animation(pokemons.get(1).name, pokemons.get(1).frames, false);
-    isInCharacterSelection = false; 
+    isInCharacterSelection = false;
   }
 }
 
@@ -66,20 +64,20 @@ void draw() {
   textAlign(CENTER, CENTER);
   fill(255, 0, 0);
   text(feedbackMessage, width/2, height - 20);
+  fill(255);
 
   if (isInCharacterSelection) {
     if (decoder.decoding()) {
-      
     } else {
       PImage savedFrame = createImage(video.width, video.height, RGB);
       savedFrame.copy(video, 0, 0, video.width, video.height, 0, 0, video.width, video.height);
       savedFrame.updatePixels();
-
+      
       decoder.decodeImage(savedFrame);
     }
   } else {
     animation2.display(width - animation2.getWidth(), 0);
     scale(-1.0, 1.0);
-    animation1.display(-animation1.getWidth(), height - animation1.getHeight());    
+    animation1.display(-animation1.getWidth(), height - animation1.getHeight());
   }
 }
