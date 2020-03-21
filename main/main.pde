@@ -1,6 +1,7 @@
 import processing.video.*;
 import qrcodeprocessing.*;
 import java.util.ArrayList;
+import processing.sound.*;
 
 ArrayList<Pokemon> pokemons = new ArrayList<Pokemon>();
 
@@ -15,12 +16,16 @@ String feedbackMessage = "Waiting PLAYER 1 to scan a Pokemon QR...";
 Animation animation1;
 Animation animation2;
 
+SoundFile BATTLE_THEME;
+
 void setup() {
   size(640, 480, P3D);
   video = new Capture(this, width, height);
   video.start();
 
   decoder = new Decoder(this);
+  
+  BATTLE_THEME = new SoundFile(this, "sounds/battle.wav");
 }
 
 void decoderEvent(Decoder decoder) {
@@ -48,6 +53,7 @@ void decoderEvent(Decoder decoder) {
     feedbackMessage = "";
     animation1 = new Animation(pokemons.get(0).name, pokemons.get(0).frames, true);
     animation2 = new Animation(pokemons.get(1).name, pokemons.get(1).frames, false);
+    thread("SoundTrackThread");
     isInCharacterSelection = false;
   }
 }
@@ -72,7 +78,7 @@ void draw() {
       PImage savedFrame = createImage(video.width, video.height, RGB);
       savedFrame.copy(video, 0, 0, video.width, video.height, 0, 0, video.width, video.height);
       savedFrame.updatePixels();
-      
+
       decoder.decodeImage(savedFrame);
     }
   } else {
@@ -80,4 +86,9 @@ void draw() {
     scale(-1.0, 1.0);
     animation1.display(-animation1.getWidth(), height - animation1.getHeight());
   }
+}
+
+void SoundTrackThread() {
+     BATTLE_THEME.play();
+     BATTLE_THEME.loop();
 }
